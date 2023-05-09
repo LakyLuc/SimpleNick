@@ -1,0 +1,14 @@
+name: SimpleNick
+version: '${project.version}'
+main: de.lcpcraft.lucas.simplenick.SimpleNick
+api-version: 1.19
+softdepend: [ LuckPerms ]
+authors: [ LakyLuc ]
+description: Customizable Nick Plugin
+commands:
+  simplenick:
+    description: Change your nickname and skin
+    aliases: [ snick ]
+    subcommands:
+      reload:
+        description: Reloads the plugin
