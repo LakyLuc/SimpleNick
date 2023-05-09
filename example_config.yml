@@ -1,0 +1,41 @@
+# Configuration file of SimpleNick by LakyLuc
+
+use_luckperms: true
+lp_group_for_nicked_players: default
+tablist_header: [ ]
+tablist_footer: [ ]
+custom_chat_format: true
+prefix: §1[§9SimpleNick§1] §r
+no_permission: §cDazu hast du keine Rechte!
+nick_info_message: §7Du bist aktuell als §r%nickname% §7genickt
+chat_format: '%player% §8> §r%message%'
+new_nickname: §7Du bist nun als §r%nickname% §7genickt
+skin_changed: §7Dein Skin wurde zu §r%skin% §7geändert
+skin_change_failed: §cDein Skin konnte nicht geändert werden!
+no_random_skin: §cEs wurde kein zufälliger Skin gefunden!
+nickname_reset: §7Dein Nickname/Skin wurde zurückgesetzt
+nickname_reset_all: §7Alle Nicknames/Skins wurden zurückgesetzt
+config_reloaded: §7Die Konfiguration wurde neu geladen
+skin_not_found_uuid: §cDer Skin des Spielers mit der UUID §r%uuid% §cwurde nicht gefunden!
+skin_not_found_use_uuid: §cDer Spieler §r%player% §cwar noch nie auf dem Server, bitte
+  nutze die UUID!
+skin_not_found_name: §cDer Skin des Spielers §r%player% §cwurde nicht gefunden!
+skin_of_player_changed: §7Der Skin von §r%player% §7wurde zu §r%skin% §7geändert
+skin_of_player_changed_failed: §cDer Skin von §r%player% §ckonnte nicht geändert werden!
+player_offline: §cDer Spieler §r%player% §cist nicht online!
+nickname_of_player_reset: §7Der Nickname/Skin von §r%player% §7wurde zurückgesetzt
+player_never_joined: §cDer Spieler §r%player% §cwar noch nie auf dem Server!
+new_nickname_of_player: §7Der Spieler §r%player% §7ist nun als §r%nickname% §7genickt
+no_nicked_players: §7Es sind aktuell keine Spieler genickt
+nicked_players: '§7Folgende Spieler sind aktuell genickt: §r%players%'
+explain_help: §e%command% §7- §aZeigt diese Hilfe an
+explain_other_random: §e%command% §7- §aNickt einen Spieler mit einem zufälligen Namen
+explain_other_skin: §e%command% §7- §aÄndert den Skin eines Spielers
+explain_other_reset: §e%command% §7- §aSetzt den Nickname/Skin eines Spielers zurück
+explain_reset_all: §e%command% §7- §aSetzt den Nickname/Skin eines Spielers zurück
+explain_random: §e%command% §7- §aNickt dich mit einem zufälligen Namen
+explain_skin: §e%command% §7- §aÄndert deinen Skin
+explain_reset: §e%command% §7- §aSetzt deinen Nickname/Skin zurück
+explain_list: §e%command% §7- §aListet alle genickten Spieler auf
+explain_reload: §e%command% §7- §aLädt die Konfiguration neu
+available_commands: '§aVerfügbare Befehle:'

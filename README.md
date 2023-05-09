@@ -55,6 +55,20 @@ LuckPerms.
 
 Alias of `/simplenick`: `/snick`
 
+## Configuration
+
+| Option                        | Type             | Description                                                                 |
+|-------------------------------|------------------|-----------------------------------------------------------------------------|
+| `use_luckperms`               | boolean          | Use LuckPerms for prefixes and suffixes                                     |
+| `lp_group_for_nicked_players` | string           | LuckPerms group for nicked players (used for prefix and suffix)             |
+| `tablist_header`              | array of strings | Tab-list header                                                             |
+| `tablist_footer`              | array of strings | Tab-list footer                                                             |
+| `custom_chat_format`          | boolean          | Use custom chat format (cancel AsyncChatEvent and resend formatted message) |
+| message_key                   | string           | Used to change messages (including placeholders)                            |
+| more_message_keys...          | ...              | ...                                                                         |
+
+You can find the default configuration [here](example_config.yml).
+
 ### Note
 
 If you see a warning in the console (`WARN: There are still nicked players online...`), you can ignore it when
