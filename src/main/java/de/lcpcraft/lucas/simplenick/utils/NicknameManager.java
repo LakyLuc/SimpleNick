@@ -9,6 +9,7 @@ import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Team;
 
 import java.util.*;
 
@@ -29,6 +30,7 @@ public class NicknameManager {
             Component rankedName = Component.text(getRankedName(onlinePlayer, cleanName));
             onlinePlayer.playerListName(rankedName);
             ProfileChanger.changeName(onlinePlayer, cleanName);
+            setPlayerTeam(onlinePlayer);
             Bukkit.getConsoleSender().sendMessage(Message.prefix + "§aNickname of " + getRealName(onlinePlayer) + " is " + cleanName);
             TexturesModel random = SimpleNick.skinManager.randomSkin(onlinePlayer.getUniqueId());
             if (random != null && ProfileChanger.changeSkin(onlinePlayer, random))
@@ -51,6 +53,7 @@ public class NicknameManager {
             String realName = getRealName(onlinePlayer);
             onlinePlayer.playerListName(Component.text(realName));
             ProfileChanger.changeName(onlinePlayer, realName, true);
+            setPlayerTeam(onlinePlayer);
         }
         Bukkit.getConsoleSender().sendMessage(Message.prefix + "§aAll players have been reset.");
     }
@@ -64,6 +67,7 @@ public class NicknameManager {
         player.playerListName(rankedName);
         ProfileChanger.cacheSkin(player);
         ProfileChanger.changeName(player, cleanName);
+        setPlayerTeam(player);
     }
 
     public void onPlayerJoin(Player player) {
@@ -88,6 +92,7 @@ public class NicknameManager {
             Component rankedName = Component.text(getRankedName(player, cleanName));
             player.playerListName(rankedName);
             ProfileChanger.changeName(player, cleanName);
+            setPlayerTeam(player);
             Bukkit.getConsoleSender().sendMessage(Message.prefix + "§7" + getRealName(player) + " §ais now nicked as §7" + cleanName);
             TexturesModel random = SimpleNick.skinManager.randomSkin(player.getUniqueId());
             if (random != null && ProfileChanger.changeSkin(player, random))
@@ -103,6 +108,7 @@ public class NicknameManager {
             Component rankedName = Component.text(getRankedName(player, getRealName(player)));
             player.playerListName(rankedName);
             ProfileChanger.changeName(player, getRealName(player));
+            setPlayerTeam(player);
             Bukkit.getConsoleSender().sendMessage(Message.prefix + "§7" + player.getName() + " §ais no longer nicked.");
             Optional<TexturesModel> playerSkin = SimpleNick.skinManager.getSkin(player.getUniqueId());
             playerSkin.ifPresent(texturesModel -> ProfileChanger.changeSkin(player, texturesModel));
@@ -117,6 +123,7 @@ public class NicknameManager {
                 Component rankedName = Component.text(getRankedName(player, getRealName(player)));
                 player.playerListName(rankedName);
                 ProfileChanger.changeName(player, getRealName(player));
+                setPlayerTeam(player);
                 Optional<TexturesModel> playerSkin = SimpleNick.skinManager.getSkin(player.getUniqueId());
                 playerSkin.ifPresent(texturesModel -> ProfileChanger.changeSkin(player, texturesModel));
             }
@@ -174,5 +181,36 @@ public class NicknameManager {
 
     public HashMap<String, String> getRealNames() {
         return new HashMap<>(realNames);
+    }
+
+    public void setPlayerTeam(Player player) {
+        if (SimpleNick.useTeams()) {
+            if (SimpleNick.useLuckPerms()) {
+                LuckPerms api = LuckPermsProvider.get();
+                User user = api.getUserManager().getUser(getRealName(player));
+                if (user == null) return;
+                Group group = api.getGroupManager().getGroup(user.getPrimaryGroup());
+                String prefix = user.getCachedData().getMetaData().getPrefix();
+                String suffix = user.getCachedData().getMetaData().getSuffix();
+                if (nicknames.containsKey(player.getUniqueId().toString())) {
+                    group = api.getGroupManager().getGroup(SimpleNick.config.getString("lp_group_for_nicked_players", "default"));
+                    prefix = null;
+                    suffix = null;
+                }
+                if (prefix == null && group != null)
+                    prefix = group.getCachedData().getMetaData().getPrefix();
+                if (suffix == null && group != null)
+                    suffix = group.getCachedData().getMetaData().getSuffix();
+                if (prefix != null || suffix != null) {
+                    Team team = player.getScoreboard().getTeam(user.getPrimaryGroup());
+                    if (team == null) team = player.getScoreboard().registerNewTeam(user.getPrimaryGroup());
+                    team.addEntry(player.getName());
+                    team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.ALWAYS);
+                    team.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
+                    team.prefix(prefix != null ? Component.text(prefix) : Component.empty());
+                    team.suffix(suffix != null ? Component.text(suffix) : Component.empty());
+                }
+            }
+        }
     }
 }

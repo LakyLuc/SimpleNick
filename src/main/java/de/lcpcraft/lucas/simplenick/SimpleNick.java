@@ -46,6 +46,7 @@ public final class SimpleNick extends JavaPlugin {
         config = YamlConfiguration.loadConfiguration(configFile);
         if (!config.isSet("use_luckperms")) {
             config.addDefault("use_luckperms", true);
+            config.addDefault("use_teams", true);
             config.addDefault("lp_group_for_nicked_players", "default");
             config.addDefault("tablist_header", new ArrayList<>());
             config.addDefault("tablist_footer", new ArrayList<>());
@@ -138,6 +139,10 @@ public final class SimpleNick extends JavaPlugin {
 
     public static boolean useLuckPerms() {
         return config.getBoolean("use_luckperms", true) && Bukkit.getPluginManager().isPluginEnabled("LuckPerms");
+    }
+
+    public static boolean useTeams() {
+        return config.getBoolean("use_teams", true) && Bukkit.getPluginManager().isPluginEnabled("LuckPerms");
     }
 
     public static boolean customChatFormat() {
