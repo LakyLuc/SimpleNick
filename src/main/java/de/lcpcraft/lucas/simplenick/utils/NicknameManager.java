@@ -29,12 +29,14 @@ public class NicknameManager {
             String cleanName = getNickname(onlinePlayer);
             Component rankedName = Component.text(getRankedName(onlinePlayer, cleanName));
             onlinePlayer.playerListName(rankedName);
-            ProfileChanger.changeName(onlinePlayer, cleanName);
+            if (nicknames.containsKey(onlinePlayer.getUniqueId().toString())) {
+                ProfileChanger.changeName(onlinePlayer, cleanName);
+                Bukkit.getConsoleSender().sendMessage(Message.prefix + "§aNickname of " + getRealName(onlinePlayer) + " is " + cleanName);
+                TexturesModel random = SimpleNick.skinManager.randomSkin(onlinePlayer.getUniqueId());
+                if (random != null && ProfileChanger.changeSkin(onlinePlayer, random))
+                    Bukkit.getConsoleSender().sendMessage(Message.prefix + "§aChanged skin of " + getRealName(onlinePlayer) + " to " + random.getName());
+            }
             setPlayerTeam(onlinePlayer);
-            Bukkit.getConsoleSender().sendMessage(Message.prefix + "§aNickname of " + getRealName(onlinePlayer) + " is " + cleanName);
-            TexturesModel random = SimpleNick.skinManager.randomSkin(onlinePlayer.getUniqueId());
-            if (random != null && ProfileChanger.changeSkin(onlinePlayer, random))
-                Bukkit.getConsoleSender().sendMessage(Message.prefix + "§aChanged skin of " + getRealName(onlinePlayer) + " to " + random.getName());
         }
         if (nicknames.isEmpty())
             Bukkit.getConsoleSender().sendMessage(Message.prefix + "§aAll players have been updated. No nicked players.");
@@ -88,13 +90,12 @@ public class NicknameManager {
         SimpleNick.saveNickname(uuid.toString(), nickname);
         Player player = Bukkit.getPlayer(uuid);
         if (player != null) {
-            String cleanName = nicknames.getOrDefault(player.getUniqueId().toString(), getRealName(player));
-            Component rankedName = Component.text(getRankedName(player, cleanName));
+            Component rankedName = Component.text(getRankedName(player, nickname));
             player.playerListName(rankedName);
-            ProfileChanger.changeName(player, cleanName);
+            ProfileChanger.changeName(player, nickname);
             setPlayerTeam(player);
-            Bukkit.getConsoleSender().sendMessage(Message.prefix + "§7" + getRealName(player) + " §ais now nicked as §7" + cleanName);
-            TexturesModel random = SimpleNick.skinManager.randomSkin(player.getUniqueId());
+            Bukkit.getConsoleSender().sendMessage(Message.prefix + "§7" + getRealName(player) + " §ais now nicked as §7" + nickname);
+            TexturesModel random = SimpleNick.skinManager.randomSkin(uuid);
             if (random != null && ProfileChanger.changeSkin(player, random))
                 Bukkit.getConsoleSender().sendMessage(Message.prefix + "§7" + getRealName(player) + " §ais now using the skin of §7" + random.getName());
         }
@@ -110,7 +111,7 @@ public class NicknameManager {
             ProfileChanger.changeName(player, getRealName(player));
             setPlayerTeam(player);
             Bukkit.getConsoleSender().sendMessage(Message.prefix + "§7" + player.getName() + " §ais no longer nicked.");
-            Optional<TexturesModel> playerSkin = SimpleNick.skinManager.getSkin(player.getUniqueId());
+            Optional<TexturesModel> playerSkin = SimpleNick.skinManager.getSkin(uuid);
             playerSkin.ifPresent(texturesModel -> ProfileChanger.changeSkin(player, texturesModel));
         }
     }
@@ -124,7 +125,7 @@ public class NicknameManager {
                 player.playerListName(rankedName);
                 ProfileChanger.changeName(player, getRealName(player));
                 setPlayerTeam(player);
-                Optional<TexturesModel> playerSkin = SimpleNick.skinManager.getSkin(player.getUniqueId());
+                Optional<TexturesModel> playerSkin = SimpleNick.skinManager.getSkin(UUID.fromString(uuid));
                 playerSkin.ifPresent(texturesModel -> ProfileChanger.changeSkin(player, texturesModel));
             }
         }
