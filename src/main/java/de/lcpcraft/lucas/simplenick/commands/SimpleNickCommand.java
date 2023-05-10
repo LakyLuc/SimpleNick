@@ -31,9 +31,11 @@ public class SimpleNickCommand implements CommandExecutor {
                 } else if (strings[0].equalsIgnoreCase("skin") && p.hasPermission("simplenick.nick")) {
                     TexturesModel random = SimpleNick.skinManager.randomSkin(p.getUniqueId());
                     if (random != null) {
-                        if (ProfileChanger.changeSkin(p, random))
+                        if (ProfileChanger.changeSkin(p, random)) {
                             p.sendMessage(Message.prefix + Message.skinChanged.replace("%skin%", random.getName()));
-                        else p.sendMessage(Message.prefix + Message.skinChangeFailed);
+                            Bukkit.getConsoleSender().sendMessage(Message.prefix + "§7" + SimpleNick.nicknameManager.getRealName(p)
+                                    + " §ais now using the skin of §7" + random.getName());
+                        } else p.sendMessage(Message.prefix + Message.skinChangeFailed);
                     } else
                         p.sendMessage(Message.prefix + Message.noRandomSkin);
                 } else if (strings[0].equalsIgnoreCase("reset") && p.hasPermission("simplenick.nick")) {
@@ -55,18 +57,22 @@ public class SimpleNickCommand implements CommandExecutor {
                     if (strings[1].equalsIgnoreCase("random")) {
                         TexturesModel random = SimpleNick.skinManager.randomSkin(p.getUniqueId());
                         if (random != null) {
-                            if (ProfileChanger.changeSkin(p, random))
+                            if (ProfileChanger.changeSkin(p, random)) {
                                 p.sendMessage(Message.prefix + Message.skinChanged.replace("%skin%", random.getName()));
-                            else p.sendMessage(Message.prefix + Message.skinChangeFailed);
+                                Bukkit.getConsoleSender().sendMessage(Message.prefix + "§7" + SimpleNick.nicknameManager.getRealName(p)
+                                        + " §ais now using the skin of §7" + random.getName());
+                            } else p.sendMessage(Message.prefix + Message.skinChangeFailed);
                         } else
                             p.sendMessage(Message.prefix + Message.noRandomSkin);
                     } else if (strings[1].length() == 36) {
                         UUID uuid = UUID.fromString(strings[1]);
                         Optional<TexturesModel> skin = SimpleNick.skinManager.getSkin(uuid);
                         if (skin.isPresent()) {
-                            if (ProfileChanger.changeSkin(p, skin.get()))
+                            if (ProfileChanger.changeSkin(p, skin.get())) {
                                 p.sendMessage(Message.prefix + Message.skinChanged.replace("%skin%", skin.get().getName()));
-                            else p.sendMessage(Message.prefix + Message.skinChangeFailed);
+                                Bukkit.getConsoleSender().sendMessage(Message.prefix + "§7" + SimpleNick.nicknameManager.getRealName(p)
+                                        + " §ais now using the skin of §7" + skin.get().getName());
+                            } else p.sendMessage(Message.prefix + Message.skinChangeFailed);
                         } else
                             p.sendMessage(Message.prefix + Message.skinNotFoundUUID.replace("%uuid%", strings[1]));
                     } else if (strings[1].length() <= 16) {
@@ -74,9 +80,11 @@ public class SimpleNickCommand implements CommandExecutor {
                         if (offlinePlayer.hasPlayedBefore()) {
                             Optional<TexturesModel> skin = SimpleNick.skinManager.getSkin(offlinePlayer.getUniqueId());
                             if (skin.isPresent()) {
-                                if (ProfileChanger.changeSkin(p, skin.get()))
+                                if (ProfileChanger.changeSkin(p, skin.get())) {
                                     p.sendMessage(Message.prefix + Message.skinChanged.replace("%skin%", skin.get().getName()));
-                                else
+                                    Bukkit.getConsoleSender().sendMessage(Message.prefix + "§7" + SimpleNick.nicknameManager.getRealName(p)
+                                            + " §ais now using the skin of §7" + skin.get().getName());
+                                } else
                                     p.sendMessage(Message.prefix + Message.skinChangeFailed);
                             } else
                                 p.sendMessage(Message.prefix + Message.skinNotFoundName.replace("%player%", strings[1]));
@@ -122,6 +130,8 @@ public class SimpleNickCommand implements CommandExecutor {
                             commandSender.sendMessage(Message.prefix + Message.skinOfPlayerChanged
                                     .replace("%player%", SimpleNick.nicknameManager.getRealName(target)).replace("%skin%", random.getName()));
                             target.sendMessage(Message.prefix + Message.skinChanged.replace("%skin%", random.getName()));
+                            Bukkit.getConsoleSender().sendMessage(Message.prefix + "§7" + SimpleNick.nicknameManager.getRealName(target)
+                                    + " §ais now using the skin of §7" + random.getName());
                         } else commandSender.sendMessage(Message.prefix + Message.skinOfPlayerChangedFailed
                                 .replace("%player%", SimpleNick.nicknameManager.getRealName(target)));
                     } else
@@ -134,6 +144,8 @@ public class SimpleNickCommand implements CommandExecutor {
                             commandSender.sendMessage(Message.prefix + Message.skinOfPlayerChanged
                                     .replace("%player%", SimpleNick.nicknameManager.getRealName(target)).replace("%skin%", skin.get().getName()));
                             target.sendMessage(Message.prefix + Message.skinChanged.replace("%skin%", skin.get().getName()));
+                            Bukkit.getConsoleSender().sendMessage(Message.prefix + "§7" + SimpleNick.nicknameManager.getRealName(target)
+                                    + " §ais now using the skin of §7" + skin.get().getName());
                         } else commandSender.sendMessage(Message.prefix + Message.skinOfPlayerChangedFailed
                                 .replace("%player%", SimpleNick.nicknameManager.getRealName(target)));
                     } else
@@ -147,6 +159,8 @@ public class SimpleNickCommand implements CommandExecutor {
                                 commandSender.sendMessage(Message.prefix + Message.skinOfPlayerChanged
                                         .replace("%player%", SimpleNick.nicknameManager.getRealName(target)).replace("%skin%", skin.get().getName()));
                                 target.sendMessage(Message.prefix + Message.skinChanged.replace("%skin%", skin.get().getName()));
+                                Bukkit.getConsoleSender().sendMessage(Message.prefix + "§7" + SimpleNick.nicknameManager.getRealName(target)
+                                        + " §ais now using the skin of §7" + skin.get().getName());
                             } else
                                 commandSender.sendMessage(Message.prefix + Message.skinOfPlayerChangedFailed
                                         .replace("%player%", SimpleNick.nicknameManager.getRealName(target)));
