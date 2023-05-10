@@ -22,6 +22,7 @@ import java.util.Objects;
 
 public final class SimpleNick extends JavaPlugin {
 
+    public static final String MODRINTH_ID = "Ysfntbb8";
     public static SimpleNick plugin;
     public static File configFile;
     public static File nicknameFile;
@@ -45,6 +46,7 @@ public final class SimpleNick extends JavaPlugin {
         configFile = new File(pluginFolder, "config.yml");
         config = YamlConfiguration.loadConfiguration(configFile);
         if (!config.isSet("use_luckperms")) {
+            config.addDefault("update_channel", "release");
             config.addDefault("use_luckperms", true);
             config.addDefault("use_teams", true);
             config.addDefault("lp_group_for_nicked_players", "default");
@@ -58,6 +60,7 @@ public final class SimpleNick extends JavaPlugin {
             }
         }
         Message.load();
+        Updater.checkForUpdates();
 
         Map<String, String> nicknames = new HashMap<>();
         Map<String, String> realNames = new HashMap<>();
@@ -98,6 +101,7 @@ public final class SimpleNick extends JavaPlugin {
     public static void reload() {
         config = YamlConfiguration.loadConfiguration(configFile);
         Message.load();
+        Updater.checkForUpdates();
         HashMap<String, String> nicknames = new HashMap<>();
         nicknameConfig = YamlConfiguration.loadConfiguration(nicknameFile);
         nicknameConfig.getValues(false).forEach((key, value) -> {
@@ -135,6 +139,13 @@ public final class SimpleNick extends JavaPlugin {
             nicknameConfig.save(nicknameFile);
         } catch (IOException ignored) {
         }
+    }
+
+    public static String updateChannel() {
+        String channel = config.getString("update_channel", "release");
+        if (channel.equals("release") || channel.equals("beta") || channel.equals("alpha"))
+            return channel;
+        return "release";
     }
 
     public static boolean useLuckPerms() {

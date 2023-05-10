@@ -1,5 +1,6 @@
 # Configuration file of SimpleNick by LakyLuc
 
+update_channel: release
 use_luckperms: true
 use_teams: true
 lp_group_for_nicked_players: default

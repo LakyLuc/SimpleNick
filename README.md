@@ -27,6 +27,7 @@ LuckPerms.
 - Traceable by logs in the console
 - Customize messages in the config file
 - Reload the configuration without restarting
+- Get notified about new updates
 
 ## Installation
 
@@ -59,7 +60,9 @@ Alias of `/simplenick`: `/snick`
 
 | Option                        | Type             | Description                                                                 |
 |-------------------------------|------------------|-----------------------------------------------------------------------------|
+| `update_channel`              | string           | Update channel release, beta or alpha; permission: `simplenick.update`      |
 | `use_luckperms`               | boolean          | Use LuckPerms for prefixes and suffixes                                     |
+| `use_teams`                   | boolean          | Use Teams for player ranks                                                  |
 | `lp_group_for_nicked_players` | string           | LuckPerms group for nicked players (used for prefix and suffix)             |
 | `tablist_header`              | array of strings | Tab-list header                                                             |
 | `tablist_footer`              | array of strings | Tab-list footer                                                             |
