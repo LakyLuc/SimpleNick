@@ -23,7 +23,7 @@ public class TabCompleteListener implements Listener {
             if (args[0].equalsIgnoreCase("/simplenick") || args[0].equalsIgnoreCase("/snick")) {
                 boolean completed = false;
                 if (args.length == 1) {
-                    if (p.hasPermission("ship.build")) {
+                    if (p.hasPermission("simplenick.nick")) {
                         complete1.add("random");
                         complete1.add("skin");
                         complete1.add("reset");
