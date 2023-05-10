@@ -95,16 +95,19 @@ public class ProfileChanger {
                 Field signature = property.getClass().getDeclaredField("signature");
                 signature.setAccessible(true);
                 signature.set(property, skin.getSignature());
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (p.canSee(player)) {
-                        p.hidePlayer(SimpleNick.plugin, player);
-                        p.showPlayer(SimpleNick.plugin, player);
+                Bukkit.getScheduler().runTaskLater(SimpleNick.plugin, () -> {
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        if (p.canSee(player)) {
+                            p.hidePlayer(SimpleNick.plugin, player);
+                            p.showPlayer(SimpleNick.plugin, player);
+                        }
                     }
-                }
+                }, 1L);
                 PacketSender.sendPacket(player, PacketCreator.createPlayerInfoRemovePacket(player.getUniqueId()));
                 PacketSender.sendPacket(player, PacketCreator.createPlayerInfoAddPacket(player));
                 PacketSender.sendPacket(player, PacketCreator.createRespawnPacket(player));
                 PacketSender.sendPacket(player, PacketCreator.createTeleportPacket(player));
+                player.updateInventory();
                 return true;
             }
         } catch (Exception e) {
