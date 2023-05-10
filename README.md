@@ -1,7 +1,7 @@
 # SimpleNick - Customizable Nick Plugin
 
 ![Version](https://img.shields.io/github/v/release/LakyLuc/SimpleNick?style=flat-square)
-![License](https://img.shields.io/badge/license-ARR-yellow?style=flat-square)
+![License](https://img.shields.io/badge/license-AGPL%20v3-yellow?style=flat-square)
 [![Modrinth Downloads](https://img.shields.io/modrinth/dt/Ysfntbb8?style=flat-square)](https://modrinth.com/plugin/simplenick)
 
 ## Description
