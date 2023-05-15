@@ -23,6 +23,7 @@ import java.util.Objects;
 public final class SimpleNick extends JavaPlugin {
 
     public static final String MODRINTH_ID = "Ysfntbb8";
+    public static final String MODRINTH_LINK = "https://modrinth.com/plugin/simplenick/version/%version%";
     public static SimpleNick plugin;
     public static File configFile;
     public static File nicknameFile;

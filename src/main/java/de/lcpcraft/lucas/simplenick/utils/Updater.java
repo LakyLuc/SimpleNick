@@ -26,7 +26,8 @@ public class Updater {
         if (!latestVersion.version_number.equals(pluginVersion)) {
             Updater.latestVersion = latestVersion;
             Bukkit.getConsoleSender().sendMessage(Message.prefix + "§aA new version of SimpleNick is available: §e" + latestVersion.version_number);
-            Bukkit.getConsoleSender().sendMessage(Message.prefix + "§aDownload it at §e" + latestVersion.files[0].url);
+            Bukkit.getConsoleSender().sendMessage(Message.prefix + "§aDownload it at §e"
+                    + SimpleNick.MODRINTH_LINK.replace("%version%", latestVersion.version_number));
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (onlinePlayer.hasPermission("simplenick.update"))
                     sendUpdateMessage(onlinePlayer);
@@ -36,7 +37,8 @@ public class Updater {
 
     public static void sendUpdateMessage(Player player) {
         if (latestVersion != null) {
-            Component link = Component.text("Modrinth").clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, latestVersion.files[0].url))
+            Component link = Component.text("Modrinth").clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL,
+                            SimpleNick.MODRINTH_LINK.replace("%version%", latestVersion.version_number)))
                     .hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text("§7Änderungsliste:\n" + latestVersion.changelog)));
             Component message = Component.text(Message.prefix + "§eEine neue Version von SimpleNick ist verfügbar ("
                     + latestVersion.version_number + "). Download auf ").append(link).append(Component.text("§e verfügbar."));
