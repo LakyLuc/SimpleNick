@@ -42,9 +42,9 @@ public class Updater {
         if (latestVersion != null) {
             Component link = Component.text("Modrinth").clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL,
                             SimpleNick.MODRINTH_LINK.replace("%version%", latestVersion.version_number)))
-                    .hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text("§7Änderungsliste:\n" + latestVersion.changelog)));
-            Component message = Component.text(Message.prefix + "§eEine neue Version von SimpleNick ist verfügbar ("
-                    + latestVersion.version_number + "). Download auf ").append(link).append(Component.text("§e verfügbar."));
+                    .hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text("§7Changelog:\n" + latestVersion.changelog)));
+            Component message = Component.text(Message.prefix + "§aA new version of SimpleNick is available §7("
+                    + latestVersion.version_number + ") §aDownload it at ").append(link);
             player.sendMessage(message);
         }
     }
