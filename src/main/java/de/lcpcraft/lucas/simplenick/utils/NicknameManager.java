@@ -207,7 +207,8 @@ public class NicknameManager {
                     if (team == null) team = player.getScoreboard().registerNewTeam(user.getPrimaryGroup());
                     team.addEntry(player.getName());
                     team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.ALWAYS);
-                    team.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
+                    if (SimpleNick.collisionsDisabled())
+                        team.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
                     team.prefix(prefix != null ? Component.text(prefix) : Component.empty());
                     team.suffix(suffix != null ? Component.text(suffix) : Component.empty());
                 }

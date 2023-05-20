@@ -67,6 +67,7 @@ Alias of `/simplenick`: `/snick`
 | `tablist_header`              | array of strings | Tab-list header                                                             |
 | `tablist_footer`              | array of strings | Tab-list footer                                                             |
 | `custom_chat_format`          | boolean          | Use custom chat format (cancel AsyncChatEvent and resend formatted message) |
+| `disable_collisions`          | boolean          | Sets player collisions to NEVER                                             |
 | message_key                   | string           | Used to change messages (including placeholders)                            |
 | more_message_keys...          | ...              | ...                                                                         |
 

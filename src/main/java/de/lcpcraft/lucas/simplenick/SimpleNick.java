@@ -46,7 +46,7 @@ public final class SimpleNick extends JavaPlugin {
             skinFolder.mkdir();
         configFile = new File(pluginFolder, "config.yml");
         config = YamlConfiguration.loadConfiguration(configFile);
-        if (!config.isSet("use_luckperms")) {
+        if (!config.isSet("update_channel")) {
             config.addDefault("update_channel", "release");
             config.addDefault("use_luckperms", true);
             config.addDefault("use_teams", true);
@@ -54,6 +54,7 @@ public final class SimpleNick extends JavaPlugin {
             config.addDefault("tablist_header", new ArrayList<>());
             config.addDefault("tablist_footer", new ArrayList<>());
             config.addDefault("custom_chat_format", true);
+            config.addDefault("disable_collisions", true);
             config.options().header("Configuration file of SimpleNick by LakyLuc").copyDefaults(true);
             try {
                 config.save(configFile);
@@ -159,5 +160,9 @@ public final class SimpleNick extends JavaPlugin {
 
     public static boolean customChatFormat() {
         return config.getBoolean("custom_chat_format", true);
+    }
+
+    public static boolean collisionsDisabled() {
+        return config.getBoolean("disable_collisions", true);
     }
 }
