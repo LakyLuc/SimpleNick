@@ -117,7 +117,8 @@ public class NicknameManager {
     }
 
     public void unnickAllPlayers() {
-        for (String uuid : nicknames.keySet()) {
+        for (String uuid : new ArrayList<>(nicknames.keySet())) {
+            nicknames.remove(uuid);
             SimpleNick.removeNickname(uuid);
             Player player = Bukkit.getPlayer(UUID.fromString(uuid));
             if (player != null) {
@@ -129,7 +130,6 @@ public class NicknameManager {
                 playerSkin.ifPresent(texturesModel -> ProfileChanger.changeSkin(player, texturesModel));
             }
         }
-        nicknames.clear();
         Bukkit.getConsoleSender().sendMessage(Message.prefix + "§aAll players have been unnicked.");
     }
 
