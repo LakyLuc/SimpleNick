@@ -15,7 +15,7 @@ public class PacketSender {
 
     private static Object getConnection(Player player) throws Exception {
         Object entityPlayer = ReflectionUtil.getHandle(player);
-        Field playerConnectionField = entityPlayer.getClass().getField("b");
+        Field playerConnectionField = entityPlayer.getClass().getField("c");
         if (playerConnectionField.getType().getSimpleName().equals("PlayerConnection"))
             return playerConnectionField.get(entityPlayer);
         for (Field field : entityPlayer.getClass().getFields()) {

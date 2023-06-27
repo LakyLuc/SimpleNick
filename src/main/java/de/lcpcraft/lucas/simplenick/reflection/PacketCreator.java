@@ -27,27 +27,31 @@ public class PacketCreator {
         Method getHandleMethod = craftWorld.getClass().getMethod("getHandle");
         Object worldServer = getHandleMethod.invoke(craftWorld);
 
-        Method ws_Z = worldServer.getClass().getMethod("Z");
-        Method ws_ab = worldServer.getClass().getMethod("ab");
+        Method ws_aa = worldServer.getClass().getMethod("aa");
+        Method ws_ac = worldServer.getClass().getMethod("ac");
         Method ws_A = worldServer.getClass().getMethod("A");
-        Method ws_ae = worldServer.getClass().getMethod("ae");
+        Method ws_af = worldServer.getClass().getMethod("af");
         Method ws_z = worldServer.getClass().getMethod("z");
 
-        Field entityPlayer_d_field = entityPlayer.getClass().getField("d");
-        Object entityPlayer_d = entityPlayer_d_field.get(entityPlayer);
-        Method entityPlayer_d_b = entityPlayer_d.getClass().getMethod("b");
-        Method entityPlayer_d_c = entityPlayer_d.getClass().getMethod("c");
-        Method entityPlayer_gi = entityPlayer.getClass().getMethod("gi");
+        Field entityPlayer_e_field = entityPlayer.getClass().getField("e"); // PlayerInteractManager
+        Object entityPlayer_e = entityPlayer_e_field.get(entityPlayer);
+        Method entityPlayer_e_b = entityPlayer_e.getClass().getMethod("b"); // EnumGamemode
+        Method entityPlayer_e_c = entityPlayer_e.getClass().getMethod("c"); // EnumGamemode
+        Method entityPlayer_gm = entityPlayer.getClass().getMethod("gm");
+        Method entityPlayer_ar = entityPlayer.getClass().getMethod("ar");
 
         Method biomeManager_a = Class.forName("net.minecraft.world.level.biome.BiomeManager").getMethod("a", long.class);
 
-        Constructor<?> packetConstructor = packetClass.getConstructor(ws_Z.getReturnType(), ws_ab.getReturnType(),
-                biomeManager_a.getReturnType(), entityPlayer_d_b.getReturnType(), entityPlayer_d_c.getReturnType(),
-                ws_ae.getReturnType(), ws_z.getReturnType(), byte.class, entityPlayer_gi.getReturnType());
-        return packetConstructor.newInstance(ws_Z.invoke(worldServer), ws_ab.invoke(worldServer),
-                biomeManager_a.invoke(null, ws_A.invoke(worldServer)),
-                entityPlayer_d_b.invoke(entityPlayer_d), entityPlayer_d_c.invoke(entityPlayer_d),
-                ws_ae.invoke(worldServer), ws_z.invoke(worldServer), (byte) 3, entityPlayer_gi.invoke(entityPlayer));
+        // PacketPlayOutRespawn(ResourceKey<DimensionManager> dimensionType, ResourceKey<World> dimension, long sha256Seed, EnumGamemode gameMode,
+        // @Nullable EnumGamemode previousGameMode, boolean debugWorld, boolean flatWorld, byte flag, Optional<GlobalPos> lastDeathPos, int portalCooldown)
+
+        Constructor<?> packetConstructor = packetClass.getConstructor(ws_aa.getReturnType(), ws_ac.getReturnType(), long.class,
+                entityPlayer_e_b.getReturnType(), entityPlayer_e_c.getReturnType(), ws_af.getReturnType(), ws_z.getReturnType(), byte.class,
+                entityPlayer_gm.getReturnType(), entityPlayer_ar.getReturnType());
+        return packetConstructor.newInstance(ws_aa.invoke(worldServer), ws_ac.invoke(worldServer),
+                biomeManager_a.invoke(null, ws_A.invoke(worldServer)), entityPlayer_e_b.invoke(entityPlayer_e),
+                entityPlayer_e_c.invoke(entityPlayer_e), ws_af.invoke(worldServer), ws_z.invoke(worldServer), (byte) 3,
+                entityPlayer_gm.invoke(entityPlayer), entityPlayer_ar.invoke(entityPlayer));
     }
 
     public static Object createTeleportPacket(Player player) throws Exception {
