@@ -1,3 +1,6 @@
+# Not Maintained!
+I have archived this repository because I have no time to maintain it. If you want to use the plugin, you can find it on [Hangar](https://hangar.papermc.io/LakyLuc).
+
 # SimpleNick - Customizable Nick Plugin
 
 ![Version](https://img.shields.io/github/v/release/LakyLuc/SimpleNick?style=flat-square)
